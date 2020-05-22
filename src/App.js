@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Signin from './components/Signin'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      user: ""
+    }
+  }
+
+  // componentDidMount(){
+
+  // }
+
+  submitUser = (userObj) => {
+    fetch("http://localhost:3000/users")
+      .then(response => response.json())
+      .then(users => {
+        users.forEach (user => {
+          if(user.username === userObj.username){
+            this.setState({ user })
+          }
+        })
+      })
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {!this.state.user ?
+          <Signin submitUser={this.submitUser} /> :
+          <QuestionContainer />
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
