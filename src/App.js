@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import 'semantic-ui-css/semantic.min.css'
+import NavBar from './components/NavBar'
 import Signin from './components/Signin'
+import QuestionContainer from './components/QuestionContainer'
 
 class App extends Component {
 
@@ -26,13 +29,29 @@ class App extends Component {
       })
   }
 
+  // getQuestion = () => {
+  //   fetch("http://localhost:3000/questions")
+  //   .then(response => response.json())
+  //   .then(questions => {
+  //     const randomQuestion = questions[Math.floor(Math.random() * questions.length)]
+  //     this.setState({
+  //       question: randomQuestion
+  //     })
+  //   })
+  // }
+
   render() {
+
     return (
       <div className="App">
-        {!this.state.user ?
+        {!this.state.user && <Signin submitUser={this.submitUser}/>}
+        {this.state.user && <NavBar/>}
+        {this.state.user && <QuestionContainer />}
+        {/* {!this.state.user ?
           <Signin submitUser={this.submitUser} /> :
           <QuestionContainer />
-        }
+        } */}
+
       </div>
     );
   }
