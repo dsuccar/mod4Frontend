@@ -1,9 +1,8 @@
 import React, {  Component } from 'react';
+// import {Link} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-
-
-
-export default class Signin extends Component {
+class Signin extends Component {
   constructor() {
     super()
     this.state = {
@@ -21,6 +20,7 @@ export default class Signin extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
+    this.props.history.push("/question")
     const user = {
       username: this.state.username
     }
@@ -32,9 +32,9 @@ export default class Signin extends Component {
     return (
       <form>
         <input placeholder='Username' name='username' type='text' onChange={this.handleChange} value={this.state.username} />
-        <input type='submit' value='Sign In' onClick={this.handleSubmit} />
+          <input type='submit' value='Sign In' onClick={this.handleSubmit} />
       </form>
-
     )
   }
 }
+export default withRouter(Signin)

@@ -22,7 +22,8 @@ export default class Choice extends Component {
                     <Card.Content>
                         <Card.Description>
                         <div className='choice'>
-                            <h1>Choice Stats!!</h1>
+                            <h1>{this.props.choiceCount}</h1>
+                            <h1>{Math.round((this.props.choiceCount / this.props.total) * 100) + "%"}</h1>
                         </div>
                         </Card.Description>
                     </Card.Content>
