@@ -38,9 +38,6 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.user && <NavBar/>}
-        {/* {
-          (this.state.user) ? <NavBar/> : <h1></h1>
-        } */}
         <Switch>
 
           <Route exact path='/' render={() => <Signin submitUser={this.submitUser} user={this.state.user}/>} />
