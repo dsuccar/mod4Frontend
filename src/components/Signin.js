@@ -1,6 +1,7 @@
 import React, {  Component } from 'react';
 // import {Link} from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
+import { wait } from '@testing-library/react';
 
 class Signin extends Component {
   constructor() {
@@ -10,6 +11,7 @@ class Signin extends Component {
     }
   }
 
+
   handleChange = (event) => {
     const value = event.target.value
     const name = event.target.name
@@ -17,14 +19,14 @@ class Signin extends Component {
       [name]: value
     })
   }
-
+  
   handleSubmit = (event) => {
     event.preventDefault()
-    this.props.history.push("/question")
     const user = {
       username: this.state.username
     }
     this.props.submitUser(user)
+    this.props.history.push(`/question`)
     this.setState({username: ""})
   }
 
