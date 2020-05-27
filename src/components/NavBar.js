@@ -1,4 +1,6 @@
  import React, { Component } from 'react'
+ import { Link } from 'react-router-dom'
+
    
 export default class NavBar extends Component{
     render(){
@@ -7,12 +9,16 @@ export default class NavBar extends Component{
             <div class="header item">
               Would You Rather
             </div>
+            <Link to="/submit_question">
+              <a class="item">
+                Submit a Question
+              </a>
+            </Link>
+            <Link to={`/users/${this.props.userData.id}`}>
             <a class="item">
-              Submit a Question
+              {this.props.userData.username}
             </a>
-            <a class="item">
-              {localStorage["user"].username}
-            </a>
+            </Link>
           </div>
         )
     }

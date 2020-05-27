@@ -11,55 +11,78 @@ export default class QuestionContainter extends Component {
       choiceMade: false,
       firstChoiceCount: 0,
       secondChoiceCount: 0,
-      total: 0
+      total: 0,
+      firstPicked: false,
+      secondPicked: false
     }
   }
 
   componentDidMount(){
-    fetch(`http://localhost:3000/users/${this.props.user.id}/unique_question`)
+    fetch(`http://localhost:3000/users/${this.props.userData.id}/unique_question`)
     .then(response => response.json())
     .then(question => {
-      this.setState({question})
+      this.setState({...this.state, question: question})
     })
   }
 
   handleChoice = (event) => {
-    this.getQuestionStats()
-    const user_question = {
-      user_id: this.props.user.id,
+    let picked1 = false
+    let picked2 = false
+    let countArr = this.getQuestionStats()
+    let firstCount = countArr[0]
+    let secondCount = countArr[1]
+    if (event.target.textContent === this.state.question.first_option){
+      picked1 = true
+    } else {
+      picked2 = true
+    }
+    const userQuestionObj = {
+      user_id: this.props.userData.id,
       question_id: this.state.question.id,
       choice: event.target.textContent
     }
-    this.setState({choiceMade: true})
     fetch("http://localhost:3000/user_questions", {
       method: "POST", 
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(user_question)
+      body: JSON.stringify(userQuestionObj)
     })
+    .then(response => response.json())
+    .then(userQuestion => {
+      this.getQuestionStats()
+      this.setState({
+        question: {...this.state.question, user_questions: userQuestion},
+        choiceMade: true,
+        firstPicked: picked1,
+        secondPicked: picked2,
+        firstChoiceCount: firstCount,
+        secondChoiceCount: secondCount,
+        total: (firstCount + secondCount)
+      })
+    })
+    .then(this.getQuestionStats())  
   }
 
   getQuestionStats = () => {
-    fetch("http://localhost:3000/user_questions")
-    .then(response => response.json())
-    .then(userQuestions => {
-      let firstChoiceCount = 0
-      let secondChoiceCount = 0
-      userQuestions.forEach(userQuestion => {
-          if (userQuestion.choice === this.state.question.first_option){
-            firstChoiceCount += 1
-          }
-          if (userQuestion.choice === this.state.question.second_option){
-            secondChoiceCount += 1
-          }
-      })
-      this.setState({firstChoiceCount: firstChoiceCount, secondChoiceCount: secondChoiceCount, total: (firstChoiceCount + secondChoiceCount)})
+    let choiceArr = []
+    let firstChoiceCount = 0
+    let secondChoiceCount = 0
+    this.state.question.user_questions.forEach(userQuestion => {
+      if (userQuestion.choice === this.state.question.first_option){
+        firstChoiceCount += 1
+      }
+      else {
+        secondChoiceCount += 1
+      }
     })
+    choiceArr.push(firstChoiceCount)
+    choiceArr.push(secondChoiceCount)
+    return choiceArr
   }
 
   newQuestionHandler = () => {
-    fetch(`http://localhost:3000/users/${this.props.user.id}/unique_question`)
+    fetch(`http://localhost:3000/users/${this.props.userData.id}/unique_question`)
     .then(response => response.json())
     .then(question => {
       this.setState({
@@ -75,19 +98,20 @@ export default class QuestionContainter extends Component {
   render(){
     return (
       <div className='question-container'>
-        <Link to="/submit_question">
-          <button>Submit a Question</button>
-        </Link>
         <h1>{this.state.question.title}</h1>
         
-        <Choice choice={this.state.question.first_option} 
+        <Choice
+          picked={this.state.firstPicked}
+          choice={this.state.question.first_option} 
           handleChoice={this.handleChoice} 
           choiceMade={this.state.choiceMade}
           choiceCount={this.state.firstChoiceCount}
           total={this.state.total}
           />
           
-        <Choice choice={this.state.question.second_option}
+        <Choice
+          picked={this.state.secondPicked}
+          choice={this.state.question.second_option}
           handleChoice={this.handleChoice}
           choiceMade={this.state.choiceMade}
           choiceCount={this.state.secondChoiceCount}

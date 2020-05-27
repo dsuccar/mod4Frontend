@@ -1,65 +1,74 @@
-import React, { Component } from 'react';
-import 'semantic-ui-css/semantic.min.css'
-import NavBar from './components/NavBar'
-import Signin from './components/Signin'
-import QuestionContainer from './components/QuestionContainer'
-import SubmitQuestionForm from './components/SubmitQuestionForm'
-import { Route, Switch } from 'react-router-dom'
+import React, { Component } from "react";
+import "semantic-ui-css/semantic.min.css";
+import NavBar from "./components/NavBar";
+import Signin from "./components/Signin";
+import QuestionContainer from "./components/QuestionContainer";
+import SubmitQuestionForm from "./components/SubmitQuestionForm";
+import ProfilePage from "./components/ProfilePage";
+import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
-
   constructor() {
-    super()
+    super();
     this.state = {
-      user: null
-    }
+      userData: null
+    };
   }
-
-  // componentDidMount(){
-
-  // }
 
   submitUser = (userObj) => {
     fetch("http://localhost:3000/users")
-    .then(response => response.json())
-    .then(users => {
-      users.forEach (user => {
-        if(user.username === userObj.username){
-          this.setState({ user }, () => {
-            localStorage.setItem("user", user.id)
-          })
-        }
+      .then(response => response.json())
+      .then(users => {
+        const user = users.find((user) => user.username === userObj.username)
+        fetch(`http://localhost:3000/users/${user.id}/login`)
+        .then(response => response.json())
+        .then(userData => {
+          this.setState({userData})
+
+        })
       })
-    })
   }
 
   render() {
-
     return (
       <div className="App">
-        {this.state.user && <NavBar/>}
+        {this.state.userData && <NavBar userData={this.state.userData} />}
         <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <Signin submitUser={this.submitUser} userData={this.state.userData} />
+            )}
+          />
 
-          <Route exact path='/' render={() => <Signin submitUser={this.submitUser} user={this.state.user}/>} />
-          
+          <Route
+            exact
+            path={`/question`}
+            render={() => {
+              if (this.state.userData != null) {
+                return <QuestionContainer userData={this.state.userData} />;
+              } else {
+                return <h1>Loading...</h1>;
+              }
+            }}
+          />
 
-          //change route?
-          <Route exact path={`/question`} render={() => {
-           if (this.state.user != null) {
-            return <QuestionContainer user={this.state.user}/>
-           } 
-           else {
-            return <h1>Loading...</h1>
-           }
-          }
-        }/>
+          <Route
+            exact
+            path={"/submit_question"}
+            render={() => {
+              if (this.state.userData != null) {
+                return <SubmitQuestionForm userData={this.state.userData} />;
+              }
+            }}
+          />
 
-        <Route exact path={"/submit_question"} render={() => {
-          if (this.state.user != null){
-            return <SubmitQuestionForm user={this.state.user}/>
-          }
-        }
-      }/>
+          <Route
+            exact
+            path={"/users/:id"}
+            render={() => <ProfilePage userData={this.state.userData} />}
+          />
         </Switch>
       </div>
     );

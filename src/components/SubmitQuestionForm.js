@@ -29,7 +29,7 @@ export default class SubmitQuestionForm extends Component {
       first_option: this.state.first_option,
       second_option: this.state.second_option,
       context: this.state.context,
-      submittedUserId: this.props.user.id
+      submittedUserId: this.props.userData.id
     }
     fetch("http://localhost:3000/questions", {
       method: "POST", 
