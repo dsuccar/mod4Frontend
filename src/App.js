@@ -29,10 +29,15 @@ class App extends Component {
       })
   }
 
+  handleLogout = (event) => {
+    this.setState({userData: null})
+
+  }
+
   render() {
     return (
       <div className="App">
-        {this.state.userData && <NavBar userData={this.state.userData} />}
+        {this.state.userData && <NavBar userData={this.state.userData} handleLogout={this.handleLogout}/>}
         <Switch>
           <Route
             exact

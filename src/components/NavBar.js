@@ -5,18 +5,23 @@
 export default class NavBar extends Component{
     render(){
         return(
-          <div class="ui menu">
-            <div class="header item">
+          <div className="ui menu">
+            <div className="header item">
               Would You Rather
             </div>
             <Link to="/submit_question">
-              <a class="item">
+              <a className="item">
                 Submit a Question
               </a>
             </Link>
             <Link to={`/users/${this.props.userData.id}`}>
-            <a class="item">
+            <a className="item">
               {this.props.userData.username}
+            </a>
+            </Link>
+            <Link to={"/"}>
+            <a className="item" onClick={this.props.handleLogout}>
+              Logout
             </a>
             </Link>
           </div>

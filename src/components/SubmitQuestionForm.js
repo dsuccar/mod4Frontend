@@ -1,7 +1,6 @@
 import React, {  Component } from 'react';
 import { Link } from 'react-router-dom'
 
-
 export default class SubmitQuestionForm extends Component {
   constructor() {
     super()
@@ -53,7 +52,7 @@ export default class SubmitQuestionForm extends Component {
     return (
     <div>
         <Link to="/question">
-            <button>Back to question</button>
+            <button>Back to questions</button>
         </Link>
         <form>
             <input placeholder='Title' name='title' type='text' onChange={this.handleChange} value={this.state.title} />

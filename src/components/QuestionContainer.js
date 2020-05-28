@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Choice from './Choice'
+import CommentContainer from './CommentContainer'
 import { Link } from 'react-router-dom'
 
 export default class QuestionContainter extends Component {
@@ -95,6 +96,19 @@ export default class QuestionContainter extends Component {
     })
   }
 
+  handleDelete = (event) =>{
+    let id = event.target.id
+    fetch(`http://localhost:3000/comments/${id}`, {
+      method: "DELETE"
+    })
+    .then(comment => {
+      let updatedComments = this.state.question.comments.filter(currentComment => {
+        return currentComment.id != id
+      })
+      this.setState({question: {...this.state.question, comments: updatedComments}})
+    })
+  }
+
   render(){
     return (
       <div className='question-container'>
@@ -119,6 +133,11 @@ export default class QuestionContainter extends Component {
           />
         <h1>{this.state.question.context}</h1>
         <button onClick={this.newQuestionHandler}>Next Question</button>
+        {Object.keys(this.state.question).length !== 0
+        ?
+        <CommentContainer userData={this.props.userData} question={this.state.question} handleDelete={this.handleDelete}/>
+        :
+         <h1>Loading Comments</h1>}
       </div>
     )}
 }
