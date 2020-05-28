@@ -1,7 +1,7 @@
 import React, {  Component } from 'react';
 // import {Link} from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
-import { wait } from '@testing-library/react';
+import { Grid, Card, Form, Button } from 'semantic-ui-react'
 
 class Signin extends Component {
   constructor() {
@@ -30,12 +30,37 @@ class Signin extends Component {
     this.setState({username: ""})
   }
 
+  style =  {
+    padding: "100px"
+  }
+
+  headerStyle = {
+    textAlign: "center",
+    color: "white",
+    paddingBottom: "80px",
+    fontSize: "50px"
+  }
+
   render() {
     return (
-      <form>
-        <input placeholder='Username' name='username' type='text' onChange={this.handleChange} value={this.state.username} />
-          <input type='submit' value='Sign In' onClick={this.handleSubmit} />
-      </form>
+      <div style={this.style}>
+        <h1 style={this.headerStyle}>Welcome to Would You Rather!</h1>
+        <Card centered={true} verticalalign='middle' onClick={this.props.handleChoice}>
+        <Card.Content>
+          <Card.Description>
+            <h1>Sign In</h1>
+            <Form>
+              <Form.Field>
+                <label>Username</label>
+                <input placeholder='Username' name='username' type='text' onChange={this.handleChange} value={this.state.username} />
+              </Form.Field>
+              <Button color='violet'type='submit' value='Sign In' onClick={this.handleSubmit}>Submit</Button>
+              <Button color='violet'value='Create Account'>Create Account</Button>
+            </Form>
+          </Card.Description>
+        </Card.Content>
+      </Card>   
+      </div>
     )
   }
 }

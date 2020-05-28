@@ -18,14 +18,21 @@ export default class ProfileQuestion extends Component{
         })
     }
 
+    style = {
+        color: "white",
+        paddingLeft: "50px"
+    }
+
     render(){
         return (
-            <div>
+            <div style={this.style}>
                 <h3>{this.props.question.title}</h3>
                 <p><b>Option #1:</b> {this.props.question.first_option}</p>
                 <p><b>Option #2:</b> {this.props.question.second_option}</p>
                 <p><b>Additional Context (if given):</b> {this.props.question.context}</p>
                 <p><b>Total Answers:</b> {this.state.totalAnswers}</p>
+                <hr/>
+                <br/>
             </div>
         )
     }

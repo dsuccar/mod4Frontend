@@ -24,7 +24,6 @@ class App extends Component {
         .then(response => response.json())
         .then(userData => {
           this.setState({userData})
-
         })
       })
   }
@@ -32,6 +31,10 @@ class App extends Component {
   handleLogout = (event) => {
     this.setState({userData: null})
 
+  }
+
+  style = {
+    color: "white"
   }
 
   render() {
@@ -54,7 +57,7 @@ class App extends Component {
               if (this.state.userData != null) {
                 return <QuestionContainer userData={this.state.userData} />;
               } else {
-                return <h1>Loading...</h1>;
+                return <h1 style={this.style}>Loading...</h1>;
               }
             }}
           />

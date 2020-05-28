@@ -18,13 +18,19 @@ export default class ProfileAnswer extends Component{
         return answerText
     }
 
+    style = {
+        color: "white",
+        paddingLeft: "50px"
+    }
+
     render(){
         return (
-            <div>
+            <div style={this.style}>
                 {this.props.filter === "My Answers" ?
-                    <h1>{this.getAnswerText()}</h1> : 
-                    <h1>hi</h1>
+                    <h3>{this.getAnswerText()}</h3> : 
+                    <h1></h1>
                 }
+                <br/>
             </div>
         )
     }
