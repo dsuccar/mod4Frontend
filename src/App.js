@@ -11,42 +11,53 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      userData: null
+      userData: null,
     };
   }
 
   submitUser = (userObj) => {
-    fetch("http://localhost:3000/users")
-      .then(response => response.json())
-      .then(users => {
-        const user = users.find((user) => user.username === userObj.username)
-        fetch(`http://localhost:3000/users/${user.id}/login`)
-        .then(response => response.json())
-        .then(userData => {
-          this.setState({userData})
-        })
-      })
-  }
+    // fetch("http://localhost:3000/users")
+    fetch("https://ancient-cliffs-69900.herokuapp.com/users")
+      .then((response) => response.json())
+      .then((users) => {
+        const user = users.find((user) => user.username === userObj.username);
+        // fetch(`http://localhost:3000/users/${user.id}/login`);
+        fetch(
+          `https://ancient-cliffs-69900.herokuapp.com/users/${user.id}/login`
+        )
+          .then((response) => response.json())
+          .then((userData) => {
+            this.setState({ userData });
+          });
+      });
+  };
 
   handleLogout = (event) => {
-    this.setState({userData: null})
-
-  }
+    this.setState({ userData: null });
+  };
 
   style = {
-    color: "white"
-  }
+    color: "white",
+  };
 
   render() {
     return (
       <div className="App">
-        {this.state.userData && <NavBar userData={this.state.userData} handleLogout={this.handleLogout}/>}
+        {this.state.userData && (
+          <NavBar
+            userData={this.state.userData}
+            handleLogout={this.handleLogout}
+          />
+        )}
         <Switch>
           <Route
             exact
             path="/"
             render={() => (
-              <Signin submitUser={this.submitUser} userData={this.state.userData} />
+              <Signin
+                submitUser={this.submitUser}
+                userData={this.state.userData}
+              />
             )}
           />
 
