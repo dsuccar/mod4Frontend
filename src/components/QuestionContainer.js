@@ -22,7 +22,7 @@ export default class QuestionContainter extends Component {
     //   `http://localhost:3000/users/${this.props.userData.id}/unique_question`
     // );
     fetch(
-      `https://ancient-cliffs-69900.herokuapp.com/users/${this.props.userData.id}/unique_question`
+      `https://ancient-cliffs-69900.herokuapp.com/users/${this.props.userData.id}/unique_question/`
     )
       .then((response) => response.json())
       .then((question) => {
@@ -143,7 +143,7 @@ export default class QuestionContainter extends Component {
     }).then((comment) => {
       let updatedComments = this.state.question.comments.filter(
         (currentComment) => {
-          return currentComment.id != id;
+          return currentComment.id !== id;
         }
       );
       this.setState({

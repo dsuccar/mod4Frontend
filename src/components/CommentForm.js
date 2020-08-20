@@ -40,7 +40,7 @@ export default class CommentForm extends Component {
     };
     // fetch(`http://localhost:3000/comments/${this.props.comment.id}`
     fetch(
-      `https://ancient-cliffs-69900.herokuapp.com/comments/${this.props.comment.id}`,
+      `https://ancient-cliffs-69900.herokuapp.com/comments/${this.props.comment.id}/`,
       {
         method: "PATCH",
         headers: {
