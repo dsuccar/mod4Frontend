@@ -22,7 +22,7 @@ export default class QuestionContainter extends Component {
     //   `http://localhost:3000/users/${this.props.userData.id}/unique_question`
     // );
     fetch(
-      `https://ancient-cliffs-69900.herokuapp.com/users/${this.props.userData.id}/unique_question/`
+      `https://would-you-rather-backend-ds.herokuapp.com/users/${this.props.userData.id}/unique_question/`
     )
       .then((response) => response.json())
       .then((question) => {
@@ -48,7 +48,7 @@ export default class QuestionContainter extends Component {
       choice: event.target.textContent,
     };
     // fetch("http://localhost:3000/user_questions"
-    fetch("https://ancient-cliffs-69900.herokuapp.com/user_questions", {
+    fetch("https://would-you-rather-backend-ds.herokuapp.com/user_questions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export default class QuestionContainter extends Component {
     //   `http://localhost:3000/users/${this.props.userData.id}/unique_question`
     // )
     fetch(
-      `https://ancient-cliffs-69900.herokuapp.com/users/${this.props.userData.id}/unique_question`
+      `https://would-you-rather-backend-ds.herokuapp.com/users/${this.props.userData.id}/unique_question`
     )
       .then((response) => response.json())
       .then((question) => {
@@ -117,7 +117,7 @@ export default class QuestionContainter extends Component {
       comment_text: comment,
     };
     // fetch("http://localhost:3000/comments"
-    fetch("https://ancient-cliffs-69900.herokuapp.com/comments", {
+    fetch("https://would-you-rather-backend-ds.herokuapp.com/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export default class QuestionContainter extends Component {
     let id = event.target.id;
     // fetch(`http://localhost:3000/comments/${id}`
 
-    fetch(`https://ancient-cliffs-69900.herokuapp.com/comments/${id}`, {
+    fetch(`https://would-you-rather-backend-ds.herokuapp.com/comments/${id}`, {
       method: "DELETE",
     }).then((comment) => {
       let updatedComments = this.state.question.comments.filter(
